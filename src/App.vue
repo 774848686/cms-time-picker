@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <city-picker 
-    :selectData="selectData"
-    @selectChange="selectChange">
-    </city-picker>
+    <time-picker>
+   
+    </time-picker>
   </div>
 </template>
 
@@ -12,7 +11,7 @@ export default {
   name: "App",
   data() {
     return {
-     selectData:['210300']
+     
     };
   },
 

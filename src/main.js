@@ -5,9 +5,9 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import CityPicker from './lib/CityPicker'
+import TimePicker from './lib/TimePicker'
 
-Vue.use(ElementUI).use(CityPicker);
+Vue.use(ElementUI).use(TimePicker);
 
 Vue.config.productionTip = false
 
