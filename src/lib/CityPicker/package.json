@@ -1,0 +1,14 @@
+{
+  "name": "lhdcitypicker",
+  "version": "0.0.2",
+  "description": "this is a vue plus",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "devin2016",
+  "dependencies": {}
+}
