@@ -7,7 +7,7 @@
       >
         <span v-if="typeof item=='string'">
           <span v-if="index==0">
-            {{item}}
+            {{item | getWeek}}
           </span>
           <template v-else>
             <el-checkbox class="check-all">{{item}}</el-checkbox>
@@ -17,6 +17,7 @@
           <el-checkbox
             v-for="(subitem,index) in item"
             :key="index"
+            @change="checkChange($event,index)"
           ></el-checkbox>
         </div>
       </li>
@@ -30,13 +31,37 @@
 export default {
   props: ["itemData"],
   data() {
-    return {};
+    return {
+      selectData:{}
+    };
+  },
+  filters: {
+    getWeek(code) {
+      let weekType = {
+        Mon: "星期一",
+        Tue: "星期二",
+        Wed: "星期三",
+        Thu: "星期四",
+        Fri: "星期五",
+        Sat: "星期六",
+        Sun: "星期日"
+      };
+      return weekType[code];
+    }
   },
   mounted() {
-    console.log(this.itemData);
+    this.selectData[this.itemData[0]] = [];
   },
-  methods: {},
-  watch: {}
+  methods: {
+    checkChange(event, index) {
+      console.log(event, index);
+    }
+  },
+  watch: {
+    itemData(rv) {
+      console.log(rv);
+    }
+  }
 };
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -48,9 +73,9 @@ export default {
     margin-left: 5px;
   }
 }
- .time-content-item:nth-child(2) {
-   .el-checkbox.el-checkbox__input{
-  display: none!important;
-}
+.time-content-item:nth-child(2) {
+  .el-checkbox.el-checkbox__input {
+    display: none !important;
   }
+}
 </style>

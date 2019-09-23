@@ -60,13 +60,13 @@ export default {
     getItemData() {
       const dateNumber = 7;
       const weekArray = [
-        "星期一",
-        "星期二",
-        "星期三",
-        "星期四",
-        "星期五",
-        "星期六",
-        "星期日"
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
       ];
       const compose = (f, g) => {
         return (val,group) => {
