@@ -10,16 +10,14 @@
       </el-form-item>
       <el-form-item class="el-form-item-columns">
         <ul>
-          <li v-for="item in columns">
-            <span v-for="subitem in item.split(',')">
-              {{subitem}}
-            </span>
+          <li v-for="(item,index) in columns" :key="index">
+            <span v-for="(subitem,subindex) in item.split(',')" :key="subindex">{{subitem}}</span>
           </li>
         </ul>
       </el-form-item>
       <el-form-item class="el-form-item-content">
         <template>
-          <div class="time-list" v-for="(item,index) in itemData">
+          <div class="time-list" v-for="(item,index) in itemData" :key="index">
             <quantum-time :itemData="item"></quantum-time>
           </div>
         </template>
@@ -59,18 +57,10 @@ export default {
   methods: {
     getItemData() {
       const dateNumber = 7;
-      const weekArray = [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun"
-      ];
+      const weekArray = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
       const compose = (f, g) => {
-        return (val,group) => {
-          return f(g(val),group);
+        return (val, group) => {
+          return f(g(val), group);
         };
       };
       const getTimeArray = num => {
@@ -93,9 +83,9 @@ export default {
         getTimeArray
       );
       for (let i = 0; i < dateNumber; i++) {
-        this.itemData.push([weekArray[i],"全天投放",...finalResult(24,6)]);
+        this.itemData.push([weekArray[i], "全天投放", finalResult(24, 6)]);
       }
-      console.log(this.itemData)
+      console.log(this.itemData);
     }
   }
 };
@@ -103,7 +93,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 $bgColor: rgb(236, 243, 253);
 .time-picker {
-  width: 700px;
+  width: 800px;
   .el-form-item {
     margin-bottom: 0;
   }
@@ -127,6 +117,7 @@ $bgColor: rgb(236, 243, 253);
       text-align: center;
       span {
         font-size: 12px;
+        padding-right:5px;
       }
     }
   }

@@ -1,24 +1,23 @@
 <template>
   <div class="time-content">
     <ul>
-      <li
-        class="time-content-item"
-        v-for="(item,index) in itemData"
-      >
+      <li class="time-content-item" v-for="(item,index) in itemData" :key="index">
         <span v-if="typeof item=='string'">
-          <span v-if="index==0">
-            {{item | getWeek}}
-          </span>
+          <span v-if="index==0">{{item | getWeek}}</span>
           <template v-else>
             <el-checkbox class="check-all">{{item}}</el-checkbox>
           </template>
         </span>
         <div v-else>
-          <el-checkbox
-            v-for="(subitem,index) in item"
-            :key="index"
-            @change="checkChange($event,index)"
-          ></el-checkbox>
+          <el-checkbox-group v-model="checkList" @change="checkChange">
+            <ul>
+              <li v-for="(subitem,index) in item" :key="index">
+                <el-checkbox v-for="sublowitem in subitem" :key="sublowitem" :label="sublowitem">
+                  <span></span>
+                </el-checkbox>
+              </li>
+            </ul>
+          </el-checkbox-group>
         </div>
       </li>
     </ul>
@@ -32,7 +31,8 @@ export default {
   props: ["itemData"],
   data() {
     return {
-      selectData:{}
+      selectData: {},
+      checkList: []
     };
   },
   filters: {
@@ -70,12 +70,19 @@ export default {
   display: inline-block;
   text-align: center;
   .el-checkbox + .el-checkbox {
-    margin-left: 5px;
+    margin-left: -5px;
+  }
+  li {
+    width: 16.6%;
+    text-align: center;
+    display: inline-block;
+    .el-checkbox,
+    .el-checkbox__input {
+      display: inline;
+    }
   }
 }
-.time-content-item:nth-child(2) {
-  .el-checkbox.el-checkbox__input {
-    display: none !important;
-  }
+.time-content-item:nth-child(3) {
+  width: 75%;
 }
 </style>
