@@ -18,7 +18,7 @@
       <el-form-item class="el-form-item-content">
         <template>
           <div class="time-list" v-for="(item,index) in itemData" :key="index">
-            <quantum-time :itemData="item"></quantum-time>
+            <quantum-time :itemData="item" :selectData="selectData" @checkedChange="checkedChange"></quantum-time>
           </div>
         </template>
       </el-form-item>
@@ -43,7 +43,8 @@ export default {
         "16,17,18,19",
         "20,21,22,23"
       ],
-      itemData: []
+      itemData: [],
+      selectData:{}
     };
   },
   props: [],
@@ -85,7 +86,9 @@ export default {
       for (let i = 0; i < dateNumber; i++) {
         this.itemData.push([weekArray[i], "全天投放", finalResult(24, 6)]);
       }
-      console.log(this.itemData);
+    },
+    checkedChange(data){
+      console.log(data)
     }
   }
 };

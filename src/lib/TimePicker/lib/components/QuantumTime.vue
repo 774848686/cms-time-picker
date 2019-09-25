@@ -1,18 +1,38 @@
 <template>
   <div class="time-content">
     <ul>
-      <li class="time-content-item" v-for="(item,index) in itemData" :key="index">
+      <li
+        class="time-content-item"
+        v-for="(item,index) in itemData"
+        :key="index"
+      >
         <span v-if="typeof item=='string'">
           <span v-if="index==0">{{item | getWeek}}</span>
           <template v-else>
-            <el-checkbox class="check-all">{{item}}</el-checkbox>
+            <el-checkbox
+              class="check-all"
+              v-model="checkAll"
+              @change="handleCheckAllChange"
+            >
+              <span>{{item}}</span>
+            </el-checkbox>
           </template>
         </span>
         <div v-else>
-          <el-checkbox-group v-model="checkList" @change="checkChange">
+          <el-checkbox-group
+            v-model="checkedTimes"
+            @change="handleCheckedChange"
+          >
             <ul>
-              <li v-for="(subitem,index) in item" :key="index">
-                <el-checkbox v-for="sublowitem in subitem" :key="sublowitem" :label="sublowitem">
+              <li
+                v-for="(subitem,index) in item"
+                :key="index"
+              >
+                <el-checkbox
+                  v-for="sublowitem in subitem"
+                  :key="sublowitem"
+                  :label="sublowitem"
+                >
                   <span></span>
                 </el-checkbox>
               </li>
@@ -28,11 +48,13 @@
  *城市选择组件
  */
 export default {
-  props: ["itemData"],
+  props: ["itemData","selectData"],
   data() {
     return {
-      selectData: {},
-      checkList: []
+      checkedTimes: [],
+      checkAll: false,
+      timeOptions: {},
+      itemKey:''
     };
   },
   filters: {
@@ -50,15 +72,38 @@ export default {
     }
   },
   mounted() {
-    this.selectData[this.itemData[0]] = [];
+    this.initOptions();
+    this.initSelectData();
   },
   methods: {
-    checkChange(event, index) {
-      console.log(event, index);
+    initOptions() {
+      this.itemKey = this.itemData[0];
+      let tempArray = [];
+      const itemArray = this.itemData.filter(item => {
+        if (Object.prototype.toString.call(item) === "[object Array]") {
+          return item;
+        }
+      });
+      itemArray[0].forEach(item => {
+        tempArray = [...tempArray, ...item];
+      });
+      this.timeOptions[this.itemKey] = tempArray;
+    },
+    initSelectData(){
+    },
+    handleCheckAllChange(val) {
+      this.checkedTimes = val ? this.timeOptions[this.itemKey] : [];
+      this.$emit('checkedChange',{key:this.itemKey,value:this.checkedTimes});
+    },
+    handleCheckedChange(value) {
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.timeOptions[this.itemKey].length;
+      this.checkedTimes = value;
+      this.$emit('checkedChange',{key:this.itemKey,value:this.checkedTimes});
     }
   },
   watch: {
-    itemData(rv) {
+    selectData(rv) {
       console.log(rv);
     }
   }
