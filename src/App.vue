@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <time-picker>
-   
-    </time-picker>
+    <time-picker @checkChange="checkChange"></time-picker>
   </div>
 </template>
 
@@ -16,7 +14,7 @@ export default {
   },
 
   methods: {
-   selectChange(data){
+   checkChange(data){
      console.log(data)
    }
   }

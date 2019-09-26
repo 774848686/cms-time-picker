@@ -133,7 +133,7 @@ export default {
      */
     checkedChange(data) {
       this.submitData[data["key"]] = data["value"];
-      console.log(this.submitData);
+      this.$emit('checkChange',this.submitData);
     },
     /**
      * 单独时间段点击事件监听
