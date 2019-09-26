@@ -76,6 +76,9 @@ export default {
     this.initSelectData();
   },
   methods: {
+    /**
+     * 初始化全选数组
+     */
     initOptions() {
       this.itemKey = this.itemData[0];
       let tempArray = [];
@@ -89,12 +92,23 @@ export default {
       });
       this.timeOptions[this.itemKey] = tempArray;
     },
+    /**
+     * 处理选中的数组
+     */
     initSelectData(){
+      this.checkedTimes = this.selectData[this.itemKey] || [];
+      this.handleCheckedChange(this.checkedTimes);
     },
+    /**
+     * 全选事件
+     */
     handleCheckAllChange(val) {
       this.checkedTimes = val ? this.timeOptions[this.itemKey] : [];
       this.$emit('checkedChange',{key:this.itemKey,value:this.checkedTimes});
     },
+    /**
+     * 多选框选择事件
+     */
     handleCheckedChange(value) {
       let checkedCount = value.length;
       this.checkAll = checkedCount === this.timeOptions[this.itemKey].length;
@@ -104,7 +118,7 @@ export default {
   },
   watch: {
     selectData(rv) {
-      console.log(rv);
+      this.initSelectData();
     }
   }
 };
